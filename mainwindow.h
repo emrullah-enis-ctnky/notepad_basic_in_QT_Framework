@@ -6,6 +6,9 @@
 #include "QFileDialog"
 #include "QList"
 #include "QTextEdit"
+#include "QMessageBox"
+#include "QFileInfo"
+#include "QDebug"
 using namespace std;
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -20,11 +23,12 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     void new_tab_add();
-    void new_tab_add(QString *file_path);
+    void new_tab_add(QString file_path);
     void action_save();
     void action_open_file();
     void action_new_file();
-
+    QList<QTextEdit *> text_edit_list;
+    QList<QString > file_paths,clear_file_paths;
     ~MainWindow();
 private slots:
     void file_edit();
@@ -32,9 +36,9 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    QList<QTextEdit *> text_edit_list;
-    QList<QString *> file_paths;
-    int active_page=0;
+
+    int active_page=0,clear_file_index=0;
     QString file_name;
+    void current_tab();
 };
 #endif // MAINWINDOW_H
