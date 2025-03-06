@@ -61,9 +61,10 @@
     <property name="title">
      <string>Araçlar</string>
     </property>
+    <addaction name="actionNewFile"/>
     <addaction name="actionOpenFile"/>
     <addaction name="actionSave"/>
-    <addaction name="actionNewFile"/>
+    <addaction name="actionAllFileSave"/>
    </widget>
    <addaction name="menuAra_lar"/>
   </widget>
@@ -89,6 +90,11 @@
    </property>
    <property name="menuRole">
     <enum>QAction::MenuRole::NoRole</enum>
+   </property>
+  </action>
+  <action name="actionAllFileSave">
+   <property name="text">
+    <string>Tümünü Kaydet</string>
    </property>
   </action>
  </widget>

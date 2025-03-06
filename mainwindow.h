@@ -30,10 +30,14 @@ public:
     QList<QTextEdit *> text_edit_list;
     QList<QString > file_paths,clear_file_paths;
     void file_control(QString file_path,QString not_saved_text);
+    void blank_file_save(QString not_saved_file_text,int index);
+    void all_file_save_func();
+    void closeEvent(QCloseEvent *event)override;
     ~MainWindow();
 private slots:
-    void file_edit();
+
     void on_tabWidget_tabCloseRequested(int index);
+
 
 private:
     Ui::MainWindow *ui;

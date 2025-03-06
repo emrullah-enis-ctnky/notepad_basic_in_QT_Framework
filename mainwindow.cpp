@@ -12,6 +12,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionOpenFile,&QAction::triggered,this,&MainWindow::action_open_file);
     connect(ui->actionSave,&QAction::triggered,this,&MainWindow::action_save);
     connect(ui->tabWidget,&QTabWidget::currentChanged,this,&MainWindow::current_tab);
+    connect(ui->actionAllFileSave,&QAction::triggered,this,&MainWindow::all_file_save_func);
     new_tab_add();
 }
 
@@ -66,8 +67,6 @@ void MainWindow::action_open_file(){
             return;
         }
         new_tab_add(file_name);
-
-
     }
 
 }
@@ -78,11 +77,8 @@ void MainWindow::action_save(){
         file_control(file_path,not_save_text);
     }
     else {
-        qDebug()<<"Açılamadı";
+        blank_file_save(not_save_text,ui->tabWidget->currentIndex());
     }
-}
-void MainWindow::file_edit(){
-
 }
 
 void MainWindow::on_tabWidget_tabCloseRequested(int index)
@@ -119,3 +115,45 @@ void MainWindow::file_control(QString file_path,QString not_saved_text){
         file.close();
     }
 }
+void MainWindow::blank_file_save(QString not_saved_file_text,int index){
+    QString file_name=QFileDialog::getSaveFileName(this,"Dosya kaydet","blank.txt");
+    if(file_name.isEmpty()){
+        QMessageBox::critical(this,"Hata","Hiçbir dosya seçilmedi!");
+        return;
+    }
+    QFile file(file_name);
+    if(file.open(QIODevice::WriteOnly|QIODevice::Text)){
+        QTextStream out(&file);
+        out<<not_saved_file_text;
+        file.close();
+        ui->statusbar->showMessage("Dosya Kaydedildi!",5000);
+        text_edit_list[index]->setObjectName(file_name);
+        file_paths[index]=file_name;
+        QFileInfo file_info(file_name);
+        QString file_base_name=file_info.fileName();
+        ui->tabWidget->setTabText(active_page,file_base_name);
+    }
+    else{
+        QMessageBox::critical(this,"Hata","Dosya Kaydedilemedi!");
+    }
+}
+void MainWindow::all_file_save_func(){
+    for (int i = 0; i < text_edit_list.size(); i++) {
+        QString not_save_text=text_edit_list[i]->toPlainText();
+        QString file_path=text_edit_list[i]->objectName();
+        if(QFile::exists(file_path)){
+            file_control(file_path,not_save_text);
+        }
+        else {
+            blank_file_save(not_save_text,i);
+        }
+    }
+
+
+}
+
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    all_file_save_func();
+}
+
