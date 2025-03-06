@@ -29,6 +29,7 @@ public:
     void action_new_file();
     QList<QTextEdit *> text_edit_list;
     QList<QString > file_paths,clear_file_paths;
+    void file_control(QString file_path,QString not_saved_text);
     ~MainWindow();
 private slots:
     void file_edit();

@@ -24,7 +24,7 @@ void MainWindow::new_tab_add(){
     QTextEdit *text=new QTextEdit(this);
     text_edit_list.append(text);
     text->setObjectName("new_file"+QString::number(clear_file_index));
-    active_page=ui->tabWidget->addTab(text,"Yeni dosya");
+    active_page=ui->tabWidget->addTab(text,"Yeni dosya"+QString::number(clear_file_index));
     ui->tabWidget->setCurrentIndex(active_page);
     file_paths.append(text->objectName());
 
@@ -72,7 +72,14 @@ void MainWindow::action_open_file(){
 
 }
 void MainWindow::action_save(){
-
+    QString not_save_text=text_edit_list[ui->tabWidget->currentIndex()]->toPlainText();
+    QString file_path=text_edit_list[ui->tabWidget->currentIndex()]->objectName();
+    if(QFile::exists(file_path)){
+        file_control(file_path,not_save_text);
+    }
+    else {
+        qDebug()<<"Açılamadı";
+    }
 }
 void MainWindow::file_edit(){
 
@@ -87,11 +94,28 @@ void MainWindow::on_tabWidget_tabCloseRequested(int index)
         file_paths.removeOne(erase_tab->objectName());
         text_edit_list.removeOne(erase_tab);
         delete erase_tab;
-        //ui->tabWidget->removeTab(index);
         qDebug()<<"Çalıştı";
 
     }
 }
 void MainWindow::current_tab(){
     //int index = ui->tabWidget->currentIndex();
+}
+void MainWindow::file_control(QString file_path,QString not_saved_text){
+    QFile file(file_path);
+    if(file.open(QFile::ReadWrite|QFile::Text))
+    {
+
+        QTextStream stream(&file);
+        QString content=stream.readAll();
+        file.resize(0);
+        if(content==not_saved_text){
+            ui->statusbar->showMessage("Dosya değiştirilmedi!",5000);
+        }
+        else{
+            stream<<not_saved_text;
+            ui->statusbar->showMessage("Dosya kaydedildi!",5000);
+        }
+        file.close();
+    }
 }
