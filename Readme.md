@@ -8,6 +8,17 @@ Bu proje, basit bir **Notepad** uygulamasıdır. Uygulama, metin dosyalarını a
 - **Dosya Kaydetme**: Yapılan değişiklikleri mevcut dosyaya kaydetme.
 - **Tümünü Kaydetme**: Birden fazla dosya üzerinde yapılan değişiklikleri topluca kaydetme.
 
+## Kurulum ve Çalıştırma
+
+Programı çalıştırmak için aşağıdaki adımları takip edin:
+
+1. Depoyu klonlayın:
+   ```sh
+   git clone https://github.com/emrullah-enis-ctnky/notepad_basic_in_QT_Framework.git
+   ```
+2. Qt Creator ile `CMakeLists.txt` dosyasını açın.
+3. Projeyi derleyin ve çalıştırın.
+
 ## Lisans
 
 Copyright (C) 2025 Emrullah Enis Çetinkaya and contributors
@@ -17,3 +28,5 @@ This program is free software: you can redistribute it and/or modify it under th
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.
+
+
